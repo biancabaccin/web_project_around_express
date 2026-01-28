@@ -1,12 +1,15 @@
 # Tripleten Around the U.S. Express
 
-Around the U.S. faz parte do programa de Web Development da TripleTen, focado no desenvolvimento de um servidor API utilizando o framework Express.
+Around the U.S. é um projeto desenvolvido como parte do programa de Web Development da TripleTen, com foco na construção de um servidor API REST utilizando o framework Express.js.
+O projeto tem como objetivo aplicar conceitos fundamentais de back-end, como criação de rotas, manipulação de requisições HTTP e organização modular.
 
 # Principais Recursos Utilizados:
 
-- Core: Node.js e Express.js
-- API: REST e HTTP
+- Core: Node.js, Express.js
+- API: REST, HTTP
+- API Routes: GET, POST, PATCH, DELETE
 - Routing: Express Router
-- Data: JSON, fs e path
-- Structure: Modular architecture
-- Tooling: ESLint, EditorConfig e Nodemon
+- Data Handling: JSON, fs, path
+- Error Handling: Basic error responses (404, 500)
+- Architecture: Modular architecture
+- Tooling: ESLint, EditorConfig, Nodemon
