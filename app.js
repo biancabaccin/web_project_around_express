@@ -5,6 +5,14 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: "697ab31da00e3a59156e1807",
+  };
+
+  next();
+});
+
 mongoose.connect("mongodb://localhost:27017/aroundb");
 
 const PORT = 3000;
