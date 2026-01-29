@@ -10,6 +10,6 @@ O projeto tem como objetivo aplicar conceitos fundamentais de back-end, como cri
 - API Routes: GET, POST, PATCH, DELETE
 - Routing: Express Router
 - Data Handling: JSON, fs, path
-- Error Handling: Basic error responses (404, 500)
+- Error Handling: Basic error responses (400, 404, 500)
 - Architecture: Modular architecture
 - Tooling: ESLint, EditorConfig, Nodemon

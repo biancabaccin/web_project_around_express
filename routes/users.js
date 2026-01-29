@@ -1,38 +1,40 @@
 const router = require("express").Router();
-const fs = require("fs");
-const path = require("path");
+const User = require("../models/user");
 
 router.get("/", (req, res) => {
-  const filePath = path.join(__dirname, "..", "data", "users.json");
-
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Ocorreu um erro no servidor" });
-    }
-
-    const users = JSON.parse(data);
-    res.json(users);
-  });
+  User.find({})
+    .then((users) => res.json(users))
+    .catch((err) =>
+      res.status(500).json({ message: "Ocorreu um erro no servidor" })
+    );
 });
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  const filePath = path.join(__dirname, "..", "data", "users.json");
+router.get("/:userId", (req, res) => {
+  const { userId } = req.params;
 
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Ocorreu um erro no servidor" });
-    }
+  User.findById(userId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+      res.json(user);
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Ocorreu um erro no servidor" })
+    );
+});
 
-    const users = JSON.parse(data);
-    const user = users.find((user) => user._id === id);
+router.post("/", (req, res) => {
+  const { name, about, avatar } = req.body;
 
-    if (!user) {
-      return res.status(404).json({ message: "ID do usuário não encontrado" });
-    }
-
-    res.json(user);
-  });
+  User.create({ name, about, avatar })
+    .then((user) => res.status(201).json(user))
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({ message: "Dados inválidos" });
+      }
+      res.status(500).json({ message: "Ocorreu um erro no servidor" });
+    });
 });
 
 module.exports = router;
