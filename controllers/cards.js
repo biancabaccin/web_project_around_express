@@ -26,13 +26,14 @@ module.exports.deleteCard = (req, res) => {
   const { cardId } = req.params;
 
   Card.findByIdAndDelete(cardId)
+    .orFail()
     .then((card) => {
-      if (!card) {
-        return res.status(404).json({ message: "Cartão não encontrado" });
-      }
       res.json({ message: "Cartão deletado com sucesso" });
     })
-    .catch(() =>
-      res.status(500).json({ message: "Ocorreu um erro no servidor" })
-    );
+    .catch((err) => {
+      if (err.name === "DocumentNotFoundError") {
+        return res.status(404).json({ message: "Cartão não encontrado" });
+      }
+      res.status(500).json({ message: "Ocorreu um erro no servidor" });
+    });
 };
