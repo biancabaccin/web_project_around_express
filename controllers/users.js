@@ -12,15 +12,15 @@ module.exports.getUserById = (req, res) => {
   const { userId } = req.params;
 
   User.findById(userId)
-    .then((user) => {
-      if (!user) {
+    .orFail()
+    .then((user) => res.json(user))
+    .catch((err) => {
+      if (err.name === "DocumentNotFoundError") {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
-      res.json(user);
-    })
-    .catch(() =>
-      res.status(500).json({ message: "Ocorreu um erro no servidor" })
-    );
+
+      res.status(500).json({ message: "Ocorreu um erro no servidor" });
+    });
 };
 
 module.exports.createUser = (req, res) => {
